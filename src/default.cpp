@@ -23,12 +23,6 @@ int pos_length = 5;
 void print(ostream & out, string id, G4  & qgrs, bool raw, string sep, bool format, char c) {
 	out << left;
 	out << setw(raw ? 10 : 0) << id << sep;
-	if (format) {
-    	out << setw(raw ? 45 : 0) << format_qgrs(qgrs, c) << sep;
-	}
-	else {
-		out << setw(raw ? 45 : 0) << qgrs.sequence << sep;
-	}
 	out << right;
 	out << setw(raw ? pos_length : 0) << qgrs.start << sep;
 	out << setw(raw ? pos_length : 0) << qgrs.tetrad2 << sep;
@@ -36,7 +30,15 @@ void print(ostream & out, string id, G4  & qgrs, bool raw, string sep, bool form
 	out << setw(raw ? pos_length : 0) << qgrs.tetrad4 << sep;
 
 	out << setw(raw ? 3 : 0) << qgrs.tetrads << sep;
-	out << setw(raw ? 4 : 0) << qgrs.gscore;
+	out << setw(raw ? 4 : 0) << qgrs.gscore << sep;
+
+	out << "  " << left;
+	if (format) {
+    	out << format_qgrs(qgrs, c) << sep;
+	}
+	else {
+		out << qgrs.sequence << sep;
+	}
 	out << endl;
 }
 
@@ -60,13 +62,13 @@ void help() {
 	cout << "Column 1 - ID (order found in sequence).  x.y where x is the primary id, and y is number assigned overlaps.  " << endl;
 	cout << "           For example, all QGRS listed as 2.y overlap QGRS listed with ID 2 - where 2 is the QGRS resulting" << endl;
 	cout << "           in the highest G-Score in the group." << endl;
-	cout << "Column 2 - Sequence" << endl;
-	cout << "Column 3 - Position of the start of the first tetrad (relative to beginning of input sequence)" << endl;
-	cout << "Column 4 - Position of the start of the second tetrad (relative to beginning of input sequence)" << endl;
-	cout << "Column 5 - Position of the start of the third tetrad (relative to beginning of input sequence)" << endl;
-	cout << "Column 6 - Position of the start of the fourth tetrad (relative to beginning of input sequence)" << endl;
-	cout << "Column 7 - Number of tetrads" << endl;
-	cout << "Column 8 - G-Score" << endl;	
+	cout << "Column 2 - Position of the start of the first tetrad (relative to beginning of input sequence)" << endl;
+	cout << "Column 3 - Position of the start of the second tetrad (relative to beginning of input sequence)" << endl;
+	cout << "Column 4 - Position of the start of the third tetrad (relative to beginning of input sequence)" << endl;
+	cout << "Column 5 - Position of the start of the fourth tetrad (relative to beginning of input sequence)" << endl;
+	cout << "Column 6 - Number of tetrads" << endl;
+	cout << "Column 7 - G-Score" << endl;
+	cout << "Column 8 - Sequence" << endl;
 	cout << "\n-----------------------------------------------------------------------------------------------------------" << endl;
 	cout << " Manual sequence entry)" << endl;;
 	cout << "-----------------------------------------------------------------------------------------------------------" << endl;
@@ -79,7 +81,7 @@ void help() {
 
 
 int main(int argc, char * argv[]) {
-	string sequence = "";//GGGGAGGGGGAGGGGGGGAGGGGGG
+	string sequence = "";
 
 	bool overlaps = false;
 	int tetrads = 2;
@@ -122,7 +124,7 @@ int main(int argc, char * argv[]) {
 				cout << "Failed to open " << argv[i+1] << endl;
 				return 0;
 			}
-			
+
 		}
 		if ( arg == "-t") {
 			tetrads = atoi(argv[i+1]);
@@ -133,28 +135,28 @@ int main(int argc, char * argv[]) {
 		if ( arg == "-v") {
 			overlaps = true;
 		}
-		if (arg == "-s") {
+		if (arg == "-g") {
 			sub = argv[i+1][0];
 			format = true;
 		}
 	}
-	
+
 	std::istream & in = (infile ? in_fs : std::cin);
 	std::ostream & out = (outfile ? out_fs : std::cout);
 
-	string buff;	
+	string buff;
 	while (std::getline(in, buff))
 	{
     	sequence += buff;
 	}
-	
+
 	pos_length = log10(sequence.length()) + 2;
 
 	if ( json) {
 		out << findJSON(sequence, overlaps, tetrads, gscore);
-		
 	}
 	else {
+		out << endl;
 		vector<G4> results = find(sequence, overlaps, tetrads, gscore);
 		int id = 1;
 		if ( results.size() == 0 ) {
@@ -166,7 +168,7 @@ int main(int argc, char * argv[]) {
 			for (auto &overlap : qgrs.overlaps) {
 				string overlap_id_str = std::to_string(id) + "." + std::to_string(overlap_id++);
 				print(cout, overlap_id_str, overlap, raw, sep, format, sub);
-				
+
 			}
 			id++;
 		}
