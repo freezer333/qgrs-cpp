@@ -240,10 +240,11 @@ vector<G4> find(string sequence, bool overlaps, short min_tetrads, short min_sco
                 highest = it->gscore;
             }
         }
-
-        for ( vector<G4>::iterator git = fam_it->begin(); git != fam_it->end(); ++git) {
-            if ( !final.isequal(*git)) {
-                final.overlaps.push_back(*git);
+        if (overlaps) {
+            for ( vector<G4>::iterator git = fam_it->begin(); git != fam_it->end(); ++git) {
+                if ( !final.isequal(*git)) {
+                    final.overlaps.push_back(*git);
+                }
             }
         }
         g4s.push_back(final);
