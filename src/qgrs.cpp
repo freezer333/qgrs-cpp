@@ -215,9 +215,9 @@ vector<G4> find(string sequence, bool overlaps, short min_tetrads, short min_sco
         G4 g = raw_g4s[0];
         raw_g4s.erase (raw_g4s.begin());
         bool newFam = true;
-        for (std::vector< vector<G4> >::iterator it = fams.begin() ; it != fams.end(); ++it) {
-            if ( belongsin(g, *it) ) {
-                it->push_back(g);
+        for (auto &family : fams) {
+            if ( belongsin(g, family) ) {
+                family.push_back(g);
                 newFam = false;
             }
         }
@@ -231,19 +231,19 @@ vector<G4> find(string sequence, bool overlaps, short min_tetrads, short min_sco
     vector<G4> g4s;
 
 
-    for (vector< vector<G4> >::iterator fam_it = fams.begin() ; fam_it != fams.end(); ++fam_it) {
+    for (auto &family : fams) {
         short highest = 0;
         G4 final;
-        for (vector<G4>::iterator it = fam_it->begin() ; it != fam_it->end(); ++it) {
-            if ( it->gscore > highest ) {
-                final = *it;
-                highest = it->gscore;
+        for (auto &qgrs : family) {
+            if ( qgrs.gscore > highest ) {
+                final = qgrs;
+                highest = qgrs.gscore;
             }
         }
         if (overlaps) {
-            for ( vector<G4>::iterator git = fam_it->begin(); git != fam_it->end(); ++git) {
-                if ( !final.isequal(*git)) {
-                    final.overlaps.push_back(*git);
+            for ( auto &qgrs : family) {
+                if ( !final.isequal(qgrs)) {
+                    final.overlaps.push_back(qgrs);
                 }
             }
         }
@@ -259,8 +259,8 @@ string findJSON(string sequence, bool overlaps, short min_tetrads, short min_sco
     stringstream out;
     out << "{\"results\" : [";
     int k = 0;
-    for ( vector<G4>::iterator git = g4s.begin(); git != g4s.end(); ++git) {
-        out << git->toJSON() ;
+    for ( auto &qgrs : g4s) {
+        out <<qgrs.toJSON() ;
         if ( ++k != g4s.size()) {
             out << "," << endl;
         }
@@ -291,8 +291,8 @@ bool overlapped(G4 & a, G4 & b){
 
 
 bool belongsin(G4 g4, vector<G4> family){
-    for (std::vector<G4>::iterator it = family.begin() ; it != family.end(); ++it) {
-        if ( overlapped(g4, *it)) {
+    for (auto &qgrs : family) {
+        if ( overlapped(g4, qgrs)) {
             return true;
         }
     }
