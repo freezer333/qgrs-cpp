@@ -113,9 +113,9 @@ The following will map QGRS from `samples/nras.txt`, filtering such that only QG
 
 ```
 bin/qgrs -i samples/nras.txt -t 3 -s 50
-1             14    18    23    29  3  62  555A555GC555TCT555
-2             81    97   119   123  3  52  555ACTCAGGCGCCTG555CGCCGACTGATTACGTAGC555C555
-3           6690  6695  6700  6704  3  63  555GG555TT555G555
+1             14    18    23    29  3  62  GGGAGGGGCGGGTCTGGG
+2             81    97   119   123  3  52  GGGACTCAGGCGCCTGGGGCGCCGACTGATTACGTAGCGGGCGGG
+3           6690  6695  6700  6704  3  63  GGGGGGGGTTGGGGGGG
 ```
 
 These flags can be specified in any order.
