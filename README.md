@@ -2,7 +2,7 @@
 C++ implementation of QGRS mapping algorithm - described [here](http://bioinformatics.ramapo.edu/QGRS/credits.php).
 
 ## Getting the code
-You can clone this repository with the following commant (you need git installed on your machine!).
+You can clone this repository with the following command (you need git installed on your machine!).
 ```
 git clone https://github.com/freezer333/qgrs-cpp
 ```
@@ -17,7 +17,7 @@ If you are using maxOS or any UNIX/Linux-type system, you can build the program 
 g++ -o qgrs src/default.cpp src/qgrs.cpp --std=c++11
 ```
 
-If you are using Windows, there is a Visual Studio project file (VS 2015) included in the `/vs` directory.
+The code has not been tested on Windows.
 
 ## Using the tool
 Once you've build the executable, you can access the help segment of the program using the `-h` flag.
