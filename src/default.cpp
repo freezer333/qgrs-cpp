@@ -41,6 +41,25 @@ void print(ostream & out, string id, G4  & qgrs, bool raw, string sep, bool form
 	}
 	out << endl;
 }
+void print_heading(ostream & out, bool raw, string sep) {
+	out << left;
+	out << setw(raw ? 10 : 0) << "ID" << sep;
+	out << right;
+	out << setw(raw ? pos_length : 0) << "T1" << sep;
+	out << setw(raw ? pos_length : 0) << "T2" << sep;
+	out << setw(raw ? pos_length : 0) << "T3" << sep;
+	out << setw(raw ? pos_length : 0) << "T4" << sep;
+
+	out << setw(raw ? 3 : 0) << "TS" << sep;
+	out << setw(raw ? 4 : 0) << "GS" << sep;
+
+	out << "  " << left;
+	out << "SEQ" << sep;
+	out << endl;
+	if ( raw ) {
+		out << "--------------------------------------------------------------------------------------------" << endl;
+	}
+}
 
 void help() {
 	cout << "-----------------------------------------------------------------------------------------------------------" << endl;
@@ -55,6 +74,7 @@ void help() {
 	cout << "-s [n]                filter output to QGRS with g-score equal to or greater than n (defaults to 17)" << endl;
 	cout << "-g [c]                replace all G characters within tetrads with given character." << endl;
 	cout << "-v                    include overlapping QGRS in output (very large outputs may be generated)" << endl;
+	cout << "-notitle              omit column titles in output (does not apply to JSON)" << endl;
 
 	cout << "\n-----------------------------------------------------------------------------------------------------------" << endl;
 	cout << " Output (default or csv)" << endl;;
@@ -82,7 +102,7 @@ void help() {
 
 int main(int argc, char * argv[]) {
 	string sequence = "";
-
+	bool header = true;
 	bool overlaps = false;
 	int tetrads = 2;
 	int gscore = 17;
@@ -139,6 +159,9 @@ int main(int argc, char * argv[]) {
 			sub = argv[i+1][0];
 			format = true;
 		}
+		if (arg == "-notitle") {
+			header = false;
+		}
 	}
 
 	std::istream & in = (infile ? in_fs : std::cin);
@@ -157,6 +180,11 @@ int main(int argc, char * argv[]) {
 	}
 	else {
 		out << endl;
+		
+		if ( header ) {
+			print_heading(out, raw, sep);
+		}
+		
 		vector<G4> results = find(sequence, overlaps, tetrads, gscore);
 		int id = 1;
 		if ( results.size() == 0 ) {

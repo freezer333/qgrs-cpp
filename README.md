@@ -38,6 +38,7 @@ The following command line options are supported:
 -s [n]                filter output to QGRS with g-score equal to or greater than n (defaults to 17)
 -g [c]                replace all G characters within tetrads with given character.
 -v                    include overlapping QGRS in output (very large outputs may be generated)
+-notitle              omit column headings in output (does not apply for JSON)
 ```
 
 ### Manually entering sequence data
