@@ -18,7 +18,7 @@ inline int maximumLength (int numTetrads) {
     return (numTetrads < 3)  ? 30 : 45;
 }
 
-G4Candidate:: G4Candidate(string sequence, short tetrads, nt start_pos) {
+G4Candidate:: G4Candidate(const string & sequence, short tetrads, nt start_pos) {
     this->y1 = -1;
     this->y2 = -1;
     this->y3 = -1;
@@ -206,7 +206,7 @@ vector<G4> find(string sequence, bool overlaps, short min_tetrads, short min_sco
             }
         }
     }
-
+    
     std::sort(raw_g4s.begin(), raw_g4s.end());
 
     vector< vector<G4> > fams;
@@ -226,7 +226,7 @@ vector<G4> find(string sequence, bool overlaps, short min_tetrads, short min_sco
             fams.push_back(f);
         }
     }
-
+    
     vector<G4> g4s;
 
 
@@ -248,6 +248,7 @@ vector<G4> find(string sequence, bool overlaps, short min_tetrads, short min_sco
         }
         g4s.push_back(final);
     }
+    
     return g4s;
 }
 string findJSON(string sequence, bool overlaps, short min_tetrads, short min_score) {
@@ -300,18 +301,20 @@ bool belongsin(G4 g4, vector<G4> family){
 
 void getStartingPoints(queue<int> & starts, string sequence, int g){
     string tstring = "";
+
     for ( int i = 0; i < g; i++ ) tstring.append("G");
     int p = 0;
     bool done = false;
     while (!done) {
         p = sequence.find(tstring, p);
-        if (p >= 0)
+        if (p >= 0) 
             starts.push(p);
         else
             done = true;
         p += 1;
         
     }
+   
 }
 
 void seedQ(queue<G4Candidate> & cands, string sequence, int min_tetrads) {

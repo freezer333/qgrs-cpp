@@ -13,7 +13,7 @@ vector<G4> find(string sequence, bool overlaps = false, short min_tetrads = 2, s
 
 class G4Candidate {
 public:
-    G4Candidate(string sequence, short tetrads, nt start_pos);
+    G4Candidate(const string & sequence, short tetrads, nt start_pos);
     short score() {
         double gavg = (abs(y1-y2) + abs(y2-y3) + abs(y1-y3))/3.0;
         return floor(gmax() - gavg + gmax() * (numTetrads-2));
