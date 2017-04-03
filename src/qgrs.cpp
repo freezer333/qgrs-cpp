@@ -187,7 +187,6 @@ bool operator< (const G4 &left, const G4 &right) {
 vector<G4> find(string sequence, bool overlaps, short min_tetrads, short min_score){
     vector <G4> raw_g4s;
     queue <G4Candidate> cands;
-
     seedQ(cands, sequence, min_tetrads);
     while (!cands.empty()) {
         G4Candidate cand = cands.front();
@@ -311,6 +310,7 @@ void getStartingPoints(queue<int> & starts, string sequence, int g){
         else
             done = true;
         p += 1;
+        
     }
 }
 

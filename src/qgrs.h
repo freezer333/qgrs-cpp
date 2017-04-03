@@ -4,7 +4,7 @@
 #include <cmath>
 using namespace std;
 
-typedef unsigned short nt;
+typedef unsigned long nt;
 class G4Candidate;
 class G4;
 
