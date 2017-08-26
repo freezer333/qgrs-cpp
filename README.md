@@ -1,5 +1,8 @@
 # qgrs-cpp
-C++ implementation of QGRS mapping algorithm - described [here](http://bioinformatics.ramapo.edu/QGRS/credits.php).
+C++ implementation of QGRS mapping algorithm - described [here](http://bioinformatics.ramapo.edu/QGRS/credits.php).  This program differs from the actual algorithm used by QGRS Mapper recarding overlapping motifs and the maximum length of the motif.  In particular, a maximum of 45nt is applied for all motifs with 3+ tetrads, while a maximum of 30nt is applied for motifs with 2 tetrads.  The details of this, and dealing with overlapping motifs is described in detail in the following papers:
+
+- Frees, S., Crum, M., Menendez, C., Bagga, P.S. (2014) ["QGRS-Conserve: A Computational Method for Discovering Evolutionarily Conserved G-quadruplex Motifs"](https://humgenomics.biomedcentral.com/articles/10.1186/1479-7364-8-8). Human Genetics, BioMed Central, Vol 8 (8)
+- Menendez, C., Frees, S., and Bagga, P. (2012) [QGRS-H Predictor: A Web Server for Predicting Homologous Quadruplex forming G-Rich Sequence Motifs in Nucleotide Sequences](https://academic.oup.com/nar/article/40/W1/W96/1074452/QGRS-H-Predictor-a-web-server-for-predicting). Nucleic Acids Res. doi: 10.1093/nar/gks42240: W96-W103.
 
 ## Getting the code
 You can clone this repository with the following command (you need git installed on your machine!).
